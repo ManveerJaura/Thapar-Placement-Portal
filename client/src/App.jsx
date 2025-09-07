@@ -17,6 +17,7 @@ import SApplications from './components/Student/Applications';
 import AStudents from './components/Admin/Students';
 import AnnounceState from './context/announcements/AnnounceState'
 import JobAppState from './context/applications/JobAppState'
+import Register from './components/Register';
 
 function App() {
      const navigate = useNavigate();
@@ -39,6 +40,8 @@ function App() {
                                    <Route path='/login' element={<Login />} />
                                    <Route path='/contact-us' element={<Contact />} />
                                    <Route path='/about' element={<About />} />
+                                   <Route path='/register' element={<Register />} />
+                                   
                                    {
                                         localStorage.getItem('token') && localStorage.getItem('user') === 'student' &&
                                         <>

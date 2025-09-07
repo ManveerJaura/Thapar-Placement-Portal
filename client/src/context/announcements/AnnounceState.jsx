@@ -5,7 +5,8 @@ import AnnounceContext from "./AnnounceContext";
 import { useState } from "react";
 
 const AnnouncementState = (props) => {
-    const host = 'https://tiet-pms-backend.vercel.app';
+    const host = import.meta.env.VITE_API_URL;
+
     const initially = []
 
     const [announcements, setAnnouncements] = useState(initially)

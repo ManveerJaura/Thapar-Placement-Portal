@@ -5,7 +5,8 @@ import JobAppContext from "./JobAppContext";
 import { useState } from "react";
 
 const JobAppState = (props) => {
-    const host = 'https://tiet-pms-backend.vercel.app';
+    const host = import.meta.env.VITE_API_URL;
+
     const initially = []
 
     const [applications, setApplications] = useState(initially)

@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form';
 const Contact = () => {
     const { register, handleSubmit, reset, isSubmitting, formState: { errors } } = useForm();
 
-    const host = 'https://tiet-pms-backend.vercel.app';
+    const host = import.meta.env.VITE_API_URL;
+
 
     const onSubmit = async (data) => {
         try {

@@ -8,7 +8,7 @@ const fetchuser = require('../middleware/fetchuser')
 const isAdmin = require('../middleware/isAdmin')
 require("dotenv").config()
 
-JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 //#ROUTE:1  creating new user by post method, doesn't require login
 router.post('/createuser',
@@ -96,13 +96,14 @@ router.post('/login', [
           return res.json({ success, errors: result.array() });
      }
      const { email, password } = req.body;
+     console.log("request aagai");
 
      try {
           //check if user with the same email exists already
           let user = await User.findOne({ email })
           if (!user) {
                success = false
-               res.status(400).json({ success, error: "Email and Password combination does not match" })
+               return res.status(400).json({ success, error: "Email and Password combination does not match" })
           }
 
           const passwordCompare = await bcrypt.compare(password, user.password)
@@ -122,7 +123,7 @@ router.post('/login', [
           res.json({ "user": person.role, success, "authtoken": authtoken })
      } catch (error) {
           console.log(error.message)
-          // res.status(500).send("Opps! Something seems broken.")
+          res.status(500).send("Opps! Something seems broken.")
      }
 })
 

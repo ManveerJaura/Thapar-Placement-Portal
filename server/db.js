@@ -4,7 +4,7 @@ require("dotenv").config()
 const username = process.env.MONGO_USERNAME
 const password = process.env.MONGO_PASSWORD
 if(!username) {console.log('undefined')}
-const uri = `mongodb+srv://${username}:${password}@cluster0.y0nvrhh.mongodb.net/pms`;
+const uri = `mongodb+srv://${username}:${password}@thapar-placement-cluste.2ufazwo.mongodb.net/?retryWrites=true&w=majority&appName=thapar-placement-cluster`;
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
 const connectToDB = async() =>{

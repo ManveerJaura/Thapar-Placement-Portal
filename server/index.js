@@ -48,82 +48,62 @@
 
 
 
+const bodyParser = require("body-parser");
+const express = require("express");
+const connectToDB = require("./db");
+const cors = require("cors");
 
-
-const bodyParser = require('body-parser');
-const express = require('express');
-const connectToDB = require('./db');
-const cors = require('cors');
 const app = express();
 
-// // ✅ Only allow local frontend now
-// const allowedOrigins = [
-//   'http://localhost:5173', // React dev server
-// ];
-
-// app.use(cors({
-//   origin: (origin, callback) => {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   }
-// }));
-
 const allowedOrigins = [
-  'http://localhost:5173', // React dev server
-  'https://tiet-placement-portal-se-project.vercel.app' // Production frontend
+  "http://localhost:5173", // React dev server (local)
+  "https://thapar-placement-portal.vercel.app", // Deployed frontend
 ];
 
-// app.use(cors({
-//   origin: function(origin, callback) {
-//     // allow requests with no origin (like Postman)
-//     if (!origin) return callback(null, true);
-//     if (allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS: ' + origin));
-//     }
-//   },
-//   credentials: true,
-// }));
-
-
-// allow localhost during dev
-app.use(cors({
-  origin: ["http://localhost:5173", "https://thapar-placement-portal.vercel.app"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
-
-
+// ✅ Proper CORS setup
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow tools like Postman
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use(bodyParser.json());
 
 // API routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/announcements', require('./routes/announcements'));
-app.use('/api/jobs', require('./routes/jobs'));
-app.use('/api/applications', require('./routes/applications'));
-app.use('/api/contact-form', require('./routes/contact'));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/announcements", require("./routes/announcements"));
+app.use("/api/jobs", require("./routes/jobs"));
+app.use("/api/applications", require("./routes/applications"));
+app.use("/api/contact-form", require("./routes/contact"));
 
 // Default route
-app.use('/', (req, res) => {
-  res.send('Hello World 👋 Local server is running!');
+app.get("/", (req, res) => {
+  res.send("✅ TIET Placement Portal backend is running!");
 });
 
-const port = 5000;
+// Port setup
+const port = process.env.PORT || 5000;
 
 // Ensure DB is connected before starting server
 connectToDB()
   .then(() => {
-    console.log('✅ Database connected successfully');
+    console.log("✅ Database connected successfully");
     app.listen(port, () => {
-      console.log(`🚀 TIET-PMS backend running locally on http://localhost:${port}`);
+      console.log(
+        `🚀 TIET-PMS backend running locally on http://localhost:${port}`
+      );
     });
   })
   .catch((err) => {
-    console.error('❌ Database connection failed:', err);
+    console.error("❌ Database connection failed:", err);
     process.exit(1);
   });

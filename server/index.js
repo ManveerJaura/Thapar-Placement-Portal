@@ -89,9 +89,14 @@ const allowedOrigins = [
 //   credentials: true,
 // }));
 
+
+// allow localhost during dev
 app.use(cors({
-  origin: '*'
+  origin: ["http://localhost:5173", "https://thapar-placement-portal.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
+
 
 
 app.use(bodyParser.json());

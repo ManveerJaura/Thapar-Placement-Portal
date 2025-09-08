@@ -25,8 +25,4 @@
     "JWT_SECRET": "@jwt_secret",
     "PORT": "5000"
   }
-  
 }
-
-
-

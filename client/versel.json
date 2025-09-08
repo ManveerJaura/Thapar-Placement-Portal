@@ -17,7 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "client/$1"
+      "dest": "client/index.html"
     }
   ],
   "env": {
@@ -25,4 +25,8 @@
     "JWT_SECRET": "@jwt_secret",
     "PORT": "5000"
   }
+  
 }
+
+
+

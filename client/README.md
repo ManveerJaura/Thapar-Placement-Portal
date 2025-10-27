@@ -3,11 +3,8 @@ Built with React.js, this platform facilitates seamless interaction between stud
 
 ### FIGMA FILE LINK : [https://www.figma.com/file/0ya8uflDzuOyjAjYvRh2Xc/Untitled?type=design&node-id=0%3A1&mode=design&t=duHmaXKko6qS99Oq-1]
 
-# Team Members :
-Samdeep Sharma
-Sangeet Kumar
-Varshini Pallerla
-Riya Singla
+# Developer :
+- Manveer Jaura
 
 # Technologies Used: 
 React Js

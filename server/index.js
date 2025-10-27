@@ -52,6 +52,7 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const connectToDB = require("./db");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -78,6 +79,9 @@ app.use(
 
 app.use(bodyParser.json());
 
+// Serve static files
+app.use(express.static(path.join(__dirname, "../client/build")));
+
 // API routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/announcements", require("./routes/announcements"));
@@ -88,6 +92,12 @@ app.use("/api/contact-form", require("./routes/contact"));
 // Default route
 app.get("/", (req, res) => {
   res.send("✅ TIET Placement Portal backend is running!");
+});
+
+
+// React app fallback (MUST come after all API routes)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
 // Port setup

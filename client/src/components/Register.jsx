@@ -97,7 +97,7 @@ const Register = () => {
               <input className="form-control" {...register("branch", { required: true })} />
             </div>
             <div className="mb-3">
-              <label className="form-label">Year</label>
+              <label className="form-label">Year of Passing</label>
               <input className="form-control" {...register("year", { required: true })} />
             </div>
           </>

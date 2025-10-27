@@ -22,12 +22,15 @@ import Register from './components/Register';
 function App() {
      const navigate = useNavigate();
      useEffect(() => {
-          if (localStorage.getItem('token') && localStorage.getItem('user') === 'student') {
-              navigate('/');
-          } else if (localStorage.getItem('token') && localStorage.getItem('user') === 'admin') {
-              navigate('/');
+          const token = localStorage.getItem('token');
+          const user = localStorage.getItem('user');
+
+          // Only redirect to login if no token exists
+          if (!token) {
+               navigate('/login');
           }
-      }, [localStorage.getItem('token')]);
+     }, []);
+
 
      return (
           <>
@@ -41,7 +44,7 @@ function App() {
                                    <Route path='/contact-us' element={<Contact />} />
                                    <Route path='/about' element={<About />} />
                                    <Route path='/register' element={<Register />} />
-                                   
+
                                    {
                                         localStorage.getItem('token') && localStorage.getItem('user') === 'student' &&
                                         <>

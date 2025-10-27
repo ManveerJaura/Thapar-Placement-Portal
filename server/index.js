@@ -53,7 +53,7 @@ const express = require("express");
 const connectToDB = require("./db");
 const cors = require("cors");
 const path = require("path");
-
+const {connectTORedis} = require('./redisClient')
 const app = express();
 
 const allowedOrigins = [
@@ -104,16 +104,22 @@ app.get("*", (req, res) => {
 const port = process.env.PORT || 5000;
 
 // Ensure DB is connected before starting server
-connectToDB()
-  .then(() => {
+async function startServer() {
+  try {
+    await connectToDB();
     console.log("✅ Database connected successfully");
+
+    // connect to Redis (will throw if cannot connect)
+    await connectTORedis();
+    console.log("✅ Redis connected successfully");
+
     app.listen(port, () => {
-      console.log(
-        `🚀 TIET-PMS backend running locally on http://localhost:${port}`
-      );
+      console.log(`🚀 TIET-PMS backend running locally on http://localhost:${port}`);
     });
-  })
-  .catch((err) => {
-    console.error("❌ Database connection failed:", err);
-    process.exit(1);
-  });
+  } catch (err) {
+    console.error("❌ Startup failed:", err);
+    process.exit(1); // change to continue if you prefer fail-open
+  }
+}
+
+startServer();  
